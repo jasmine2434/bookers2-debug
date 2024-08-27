@@ -12,7 +12,7 @@
   		<table class='table'>
   		  <tr>
           <td><%= link_to(@book.user) do %>
-            <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
+            <%= image_tag @book.user.get_profile_image(100,100) %><br>
             <%= @book.user.name %>
             <% end %>
           </td>
@@ -20,17 +20,46 @@
           <td><%= @book.body %></td>
 
             <% if @book.user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
-            <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
+          <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
+          <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
             <% end %>
-            
-            
+
           <td><%= render 'favorites/favorite', book: @book %></td>
-            
-            
-            
+          <td><p>コメント件数：<%= @book.book_comments.count %></p></td>
         </tr>
       </table>
+
+      <h3>User Comments</h3>
+      <table class='comment_table'>
+        <tbody>
+          <% @book.book_comments.each do |book_comment| %>
+  		  <tr>
+          <td><%= link_to (current_user) do %>
+            <%= image_tag book_comment.user.get_profile_image(100,100) %><br>
+            <%= book_comment.user.name %>
+            <% end %>
+          </td>
+           <td>
+              <%= book_comment.comment %>
+          </td>
+          <td><% if book_comment.user == current_user %>
+            <%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%>
+              <% end %>
+          </td>
+        </tr>
+           <% end %>
+        </tbody>
+      </table>
+    
+      <div>
+        <%= form_with model: [@book, @book_comment] do |f| %>
+          <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに", class: "w-100" %>
+          <%= f.submit "送信する" %>
+        <% end %>
+      </div>
+    
     </div>
   </div>
 </div>
+
+
