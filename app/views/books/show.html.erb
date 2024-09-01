@@ -31,22 +31,15 @@
           <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
           <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
             <% end %>
-
         </tr>
       </table>
 
       <h3>User Comments</h3>
-      
-    
-      <div id　=　"comment_show">
+      <div id = "comment_show">
          <%= render "book_comments/show", book: @book %>
        </div>
        <%= render "book_comments/form", book: @book, book_comment: @book_comment %>
        
-    
-    
-    
-    
     </div>
   </div>
 </div>
