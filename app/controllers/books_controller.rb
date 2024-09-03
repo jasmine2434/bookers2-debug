@@ -6,7 +6,11 @@ class BooksController < ApplicationController
     @new_book = Book.new
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
+    
+    @book.increment!(:view_count)
   end
+  
+  
 
   def index
     #@books = Book.all
